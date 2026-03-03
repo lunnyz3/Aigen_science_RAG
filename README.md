@@ -38,7 +38,17 @@
 Composite = (Faithfulness + Answer Relevancy + Context Recall + Context Precision) / 4
 ```
 
-### 2.3 아키텍처 평균 성능 비교
+### 2.3 Modular RAG 모듈 선택 실험 (첨부 MD 반영)
+
+| Dataset | Query Expansion | Retriever | Reranker | Compressor | 최종 판단 |
+| --- | --- | --- | --- | --- | --- |
+| HotpotQA | `naive_rag` | `hybrid_retriever` | `no_reranker` | `FALSE` | 안정성 기준으로 압축 OFF |
+| BioASQ | `hyde_rag` 우세 | `hybrid_retriever` | `no_reranker` | `FALSE` | 전문 도메인에서 HyDE 유효 |
+| NQ | `naive_rag` | `dense_retriever` | `no_reranker` | `FALSE` | 일반 도메인 dense 우세 |
+| QuALITY | `naive_rag` | `dense_retriever` | `no_reranker` | `FALSE`* | 장문 질의에서 dense 안정 |
+| 자체제작 QA | `naive_rag`* | `hybrid_retriever`* | `no_reranker`* | `FALSE`* | 실서비스 쿼리형 기준 |
+
+### 2.4 아키텍처 평균 성능 비교
 
 | Architecture | Faithfulness | Answer Relevancy | Context Recall | Context Precision | Composite |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -53,7 +63,7 @@ DOS     : ##################################### 0.732
 Modular : ########################################## 0.831
 ```
 
-### 2.4 5개 데이터셋 x 3개 아키텍처 비교 (Composite)
+### 2.5 5개 데이터셋 x 3개 아키텍처 비교 (Composite)
 
 | Dataset | Vanilla | DOS | Modular | Winner |
 | --- | ---: | ---: | ---: | --- |
@@ -90,7 +100,7 @@ DOS     : ######################################### 0.825
 Modular : ############################################# 0.897
 ```
 
-### 2.5 데이터셋 자체 정답률 비교
+### 2.6 데이터셋 자체 정답률 비교
 
 | Dataset | Vanilla Accuracy | DOS Accuracy | Modular Accuracy | Winner |
 | --- | ---: | ---: | ---: | --- |
@@ -99,16 +109,6 @@ Modular : ############################################# 0.897
 | HotpotQA | 42.00% | 57.00% | **60.50%*** | Modular |
 | NQ | 16.67% | 16.00% | **21.50%*** | Modular |
 | BioASQ | 6.00%* | 3.50% | **9.50%*** | Modular |
-
-### 2.6 Modular RAG 모듈 선택 실험 (첨부 MD 반영)
-
-| Dataset | Query Expansion | Retriever | Reranker | Compressor | 최종 판단 |
-| --- | --- | --- | --- | --- | --- |
-| HotpotQA | `naive_rag` | `hybrid_retriever` | `no_reranker` | `FALSE` | 안정성 기준으로 압축 OFF |
-| BioASQ | `hyde_rag` 우세 | `hybrid_retriever` | `no_reranker` | `FALSE` | 전문 도메인에서 HyDE 유효 |
-| NQ | `naive_rag` | `dense_retriever` | `no_reranker` | `FALSE` | 일반 도메인 dense 우세 |
-| QuALITY | `naive_rag` | `dense_retriever` | `no_reranker` | `FALSE`* | 장문 질의에서 dense 안정 |
-| 자체제작 QA | `naive_rag`* | `hybrid_retriever`* | `no_reranker`* | `FALSE`* | 실서비스 쿼리형 기준 |
 
 ### 2.7 연구 결론
 
